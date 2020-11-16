@@ -9,15 +9,24 @@ class Schedule extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'course_id',
+        'hall_id',
+        'lecturer_id',
+        'date',
+        'start_time',
+        'end_time',
+    ];
+
     public function course(){
-        return $this->hasOne('App/Course');
+        return $this->belongsTo('App\Models\Course', 'course_id');
     }
 
     public function lecturer(){
-        return $this->hasOne('App/Lecturer');
+        return $this->belongsTo('App\Models\Lecturer');
     }
 
     public function hall(){
-        return $this->hasOne('App/Hall');
+        return $this->belongsTo('App\Models\Hall');
     }
 }
