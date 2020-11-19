@@ -6,13 +6,13 @@
     <div class="row margin-none">
         @include('snipps.notify')
         <div class="col-md-6 offset-md-3">
-            <form action="{{ route('schedule.store') }}" method="post">
+            <form action="{{ route('schedule.store') }}" id="scheduleForm" method="post">
                 @csrf()
 
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="course">Course</label>
-                        <select name="course_id" id="course" class="select2 form-control">
+                        <label for="courseid">Course</label>
+                        <select name="course_id" id="courseid" class="select2 form-control">
                             @foreach($courses as $course)
                                 <option value="{{ $course->id }}">{{ $course->course_code }} {{ $course->name }}</option>
                             @endforeach
@@ -20,40 +20,36 @@
                     </div>
 
                     <div class="form-group col-12">
-                        <label for="hall">Hall</label>
-                        <select name="hall_id" id="hall" class="select2 form-control">
+                        <label for="hallid">Hall</label>
+                        <select name="hall_id" id="hallid" class="select2 form-control">
                             @foreach($halls as $hall)
                                 <option value="{{ $hall->id }}">{{ $hall->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-12">
-                        <label for="lecturer">lecturer</label>
-                        <select name="lecturer_id" id="lecturer" class="select2 form-control">
+                        <label for="lecturerid">lecturer</label>
+                        <select name="lecturer_id" id="lecturerid" class="select2 form-control">
                             @foreach($lecturers as $lecturer)
                                 <option value="{{ $lecturer->id }}">{{ $lecturer->lastname }} {{ $lecturer->firstname }}</option>
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="form-group col-12">
+                    <div class="form-group col-8">
                         <label for="date">Date</label>
                         <!-- Datepicker as text field -->         
                         <div class="input-group date" data-date-format="dd.mm.yyyy">
-                            <input  type="text" class="form-control" placeholder="dd.mm.yyyy"name="date" id="date">
+                            <input  type="text" class="form-control" placeholder="dd.mm.yyyy"name="date" id="date" autocomplete="off">
                             <div class="input-group-addon" >
                             <span class="glyphicon glyphicon-th"></span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group col-6">
-                        <label for="from">From</label>
-                        <input type="text" class="form-control timepicker" autocomplete="off" name="from" id="from">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="to">To</label>
-                        <input type="text" class="form-control timepicker" autocomplete="off" name="to" id="to">
+                    <div class="form-group col-4">
+                        <label for="duration">Duration ( Hours )</label>
+                        <input type="number" min="1" max="24" value="1" class="form-control" autocomplete="off" name="duration" id="duration">
                     </div>
                 </div>
                 
@@ -61,7 +57,7 @@
 
 
                 <div class="form-group">
-                    <button class="btn btn-primary">Add</button>
+                    <button class="btn btn-primary add-schedule">Add</button>
                 </div>
             </form>
         </div>
@@ -79,8 +75,7 @@
                     <th>Lecturer</th>
                     <th>Venue</th>
                     <th>Date</th>
-                    <th>Start</th>
-                    <th>End</th>
+                    <th>duration</th>
                 </tr>
                 @foreach($schedules as $schedule)
                     <tr>
@@ -100,10 +95,7 @@
                             {{ $schedule->date }}
                         </td>
                         <td>
-                            {{ $schedule->start_time }}
-                        </td>
-                        <td>
-                            {{ $schedule->end_time }}
+                            {{ $schedule->duration }}
                         </td>
                     </tr>
                 @endforeach 

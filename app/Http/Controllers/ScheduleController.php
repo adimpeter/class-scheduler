@@ -8,6 +8,8 @@ use App\Models\Hall;
 use App\Models\Lecturer;
 use App\Models\Course;
 
+use Carbon\Carbon;
+
 class ScheduleController extends Controller
 {
     /**
@@ -47,28 +49,19 @@ class ScheduleController extends Controller
             'hall_id'       => 'required',
             'lecturer_id'   => 'required',
             'date'          => 'required',
-            'from'          => 'required',
-            'to'            => 'required',
+            'duration'      => 'required',
         ]);
 
-        // check if there is conflicting schedules
-        $conflicting_schedule = Schedule::where('date', $request->date)
-                                ->whereBetween('start_time', [$request->from, $request->to])
-                                ->whereBetween('end_time', [$request->from, $request->to])
-                                ->get();
-        
-        if($conflicting_schedule->count() > 0){
-            return redirect()->back()->with('error', 'A shedule already exists within this time');
-        }
-
-        Schedule::create([
-            'course_id' => $request->course_id,
-            'hall_id'   => $request->hall_id,
+        $schedule_data = [
+            'course_id'     => $request->course_id,
+            'hall_id'       => $request->hall_id,
             'lecturer_id'   => $request->lecturer_id,
-            'date' => $request->date,
-            'start_time' => $request->from,
-            'end_time'   => $request->to,
-        ]);
+            'date'          => Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D'),
+            'duration'      => $request->duration,
+        ];
+
+        $schedule_data['duration'] = $request->duration;
+        Schedule::create($schedule_data);
 
         return redirect()->back()->with('success', 'Your schedule has been created');
 
@@ -117,5 +110,23 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function doesSimilarScheduleExist(Request $request){
+        $schedule_data = [
+            'course_id'     => $request->course_id,
+            'hall_id'       => $request->hall_id,
+            'lecturer_id'   => $request->lecturer_id,
+            //'date'          => Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D'),
+        ];
+
+        $schedule = Schedule::where('course_id', $request->course_id)
+                    ->where('hall_id', $request->hall_id)
+                    ->where('lecturer_id', $request->lecturer_id)->get();
+
+        $response = '';
+        ($schedule->count() > 0)? $response = 'true' : $response = 'false';
+
+        return response()->json($schedule_data, 200);
     }
 }

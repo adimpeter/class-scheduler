@@ -37,4 +37,5 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
     Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
+    Route::post('/schedule/check', [ScheduleController::class, 'doesSimilarScheduleExist'])->name('schedule.check');
 });

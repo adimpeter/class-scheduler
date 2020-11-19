@@ -1,9 +1,8 @@
-<?php dump(session('status')) ?>
 
-@if (session('status'))
+@if (session('success'))
     <div class="col-md-12">
       <div class="alert alert-success" role="alert">
-          {{ session('status') }}
+          {{ session('success') }}
       </div>
     </div>
 @endif
