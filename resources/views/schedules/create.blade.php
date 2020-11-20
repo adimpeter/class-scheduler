@@ -5,6 +5,9 @@
 <section>
     <div class="row margin-none">
         @include('snipps.notify')
+        <div class="col-md-12 margin-vertical-md " id="notify">
+            
+        </div>
         <div class="col-md-6 offset-md-3">
             <form action="{{ route('schedule.store') }}" id="scheduleForm" method="post">
                 @csrf()
@@ -80,16 +83,16 @@
                 @foreach($schedules as $schedule)
                     <tr>
                         <td>
-                            <em>{{ $schedule->course->course_code }}</em>
+                            <em>{!! $schedule->course->course_code  ?? '<span class="text text-danger">N/A</span>' !!}</em>
                         </td>
                         <td>
-                            {{ $schedule->course->name }}
+                            {!! $schedule->course->name ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
-                            {{ $schedule->lecturer->lastname }} {{ $schedule->lecturer->firstname }}
+                            {!! $schedule->lecturer->lastname  ?? '<span class="text text-danger">N/A</span>' !!} {!! $schedule->lecturer->firstname  ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
-                            {{ $schedule->hall->name }}
+                            {!! $schedule->hall->name  ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
                             {{ $schedule->date }}

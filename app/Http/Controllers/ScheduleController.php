@@ -29,7 +29,7 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $schedules  = Schedule::all();
+        $schedules  = Schedule::latest()->get();
         $lecturers  = Lecturer::all();
         $halls      = Hall::all();
         $courses    = Course::all();
@@ -84,9 +84,12 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Schedule $schedule)
     {
-        //
+        $lecturers  = Lecturer::all();
+        $halls      = Hall::all();
+        $courses    = Course::all();
+        return view('schedules.edit', compact('schedule', 'lecturers', 'halls', 'courses'));
     }
 
     /**
@@ -96,9 +99,27 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Schedule $schedule)
     {
-        //
+        $request->validate([
+            'course_id'     => 'required',
+            'hall_id'       => 'required',
+            'lecturer_id'   => 'required',
+            'date'          => 'required',
+            'duration'      => 'required',
+        ]);
+
+        $schedule_data = [
+            'course_id'     => $request->course_id,
+            'hall_id'       => $request->hall_id,
+            'lecturer_id'   => $request->lecturer_id,
+            'date'          => Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D'),
+            'duration'      => $request->duration,
+        ];
+
+        $schedule->update($schedule_data);
+        return redirect()->route('schedule.showlist')->with('success', 'Your schedule has been updated');
+
     }
 
     /**
@@ -107,26 +128,35 @@ class ScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Schedule $schedule)
     {
-        //
+        $schedule->delete();
+        return redirect()->back()->with('success', 'Schedule Successfully Deleted');
     }
 
     public function doesSimilarScheduleExist(Request $request){
+        $date = Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D');
         $schedule_data = [
             'course_id'     => $request->course_id,
             'hall_id'       => $request->hall_id,
             'lecturer_id'   => $request->lecturer_id,
-            //'date'          => Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D'),
+            'date'          => $date,
         ];
 
         $schedule = Schedule::where('course_id', $request->course_id)
                     ->where('hall_id', $request->hall_id)
-                    ->where('lecturer_id', $request->lecturer_id)->get();
+                    ->where('lecturer_id', $request->lecturer_id)
+                    ->where('date', $date)->get();
+
 
         $response = '';
         ($schedule->count() > 0)? $response = 'true' : $response = 'false';
 
-        return response()->json($schedule_data, 200);
+        return response()->json($response, 200);
+    }
+
+    public function showlist(){
+        $schedules = Schedule::latest()->paginate(env('PAGINATE'));
+        return view('schedules.showlist', compact('schedules'));
     }
 }

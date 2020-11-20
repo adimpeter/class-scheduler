@@ -14,6 +14,32 @@ $(document).ready(function(){
         }
     });
 
+    $('.delete-schedule').on('click', function(e){
+        e.preventDefault();
+        var deleteForm = '.' + $(this).parent().attr('class');
+        $('#formAction #deleteForm').val(deleteForm);
+    });
+    $('.delete-hall').on('click', function(e){
+        e.preventDefault();
+        var deleteForm = '.' + $(this).parent().attr('class');
+        $('#formAction #deleteForm').val(deleteForm);
+    });
+    $('.delete-course').on('click', function(e){
+        e.preventDefault();
+        var deleteForm = '.' + $(this).parent().attr('class');
+        $('#formAction #deleteForm').val(deleteForm);
+    });
+    $('.delete-lecturer').on('click', function(e){
+        e.preventDefault();
+        var deleteForm = '.' + $(this).parent().attr('class');
+        $('#formAction #deleteForm').val(deleteForm);
+    });
+
+    $('#confirmAction').on('click', function(e){
+        var deleteForm = $(this).siblings('#deleteForm').val();
+        $(deleteForm).submit();
+    });
+
     $('.add-schedule').on('click', function(e){
         e.preventDefault();
 
@@ -21,6 +47,9 @@ $(document).ready(function(){
         var hallID          = $('#scheduleForm #hallid').val();
         var lecturerID      = $('#scheduleForm #lecturerid').val();
         var selectedDate    = $('#scheduleForm #date').val();
+
+        var notifyDisplay   = $('#notify');
+        var scheduleForm    = $('#scheduleForm');
 
 
 
@@ -40,9 +69,20 @@ $(document).ready(function(){
             },
 
             success: function(result){
-                console.log(result);
-                console.log(result.responseText);
-                console.log({courseID, lecturerID, hallID, selectedDate});
+                var errMsg = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    This Schedule already exists.
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>`;
+
+                if(result == 'true'){
+                    notifyDisplay.html(errMsg);
+                }else{
+                    scheduleForm.submit();
+                }
             },
             error: function(result){
                 alert('An Error Occured.')
@@ -50,4 +90,12 @@ $(document).ready(function(){
             }
     });
     })
+
+    function deleteProperty(property){
+        ('.delete-' + property).on('click', function(e){
+            e.preventDefault();
+            var deleteForm = '.' + $(this).parent().attr('class');
+            $('#formAction #deleteForm').val(deleteForm);
+        });
+    }
 });

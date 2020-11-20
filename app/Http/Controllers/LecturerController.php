@@ -66,9 +66,9 @@ class LecturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Lecturer $lecturer)
     {
-        //
+        return view('lecturer.edit', compact('lecturer'));
     }
 
     /**
@@ -78,9 +78,19 @@ class LecturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Lecturer $lecturer)
     {
-        //
+        $request->validate([
+            'firstname' => 'required',
+            'lastname'  => 'required', 
+        ]);
+
+        $lecturer->update([
+            'firstname' => ucwords($request->firstname),
+            'lastname'  => ucwords($request->lastname)
+        ]);
+
+        return redirect()->back()->with('success', 'Lecturer has been updated successfully');
     }
 
     /**
@@ -89,8 +99,15 @@ class LecturerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Lecturer $lecturer)
     {
-        //
+        $lecturer->delete();
+        return redirect()->back()->with('success', 'Lecturer Successfully Deleted');
+    }
+
+
+    public function showlist(){
+        $lecturers = Lecturer::latest()->paginate(env('PAGINATE'));
+        return view('lecturer.showlist', compact('lecturers'));
     }
 }

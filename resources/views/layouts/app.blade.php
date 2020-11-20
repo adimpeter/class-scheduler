@@ -43,46 +43,7 @@
                         </div>
                     </header>
 
-                    <div id="menu">
-                        <div class="menu-item">
-                            <a href="#">Dashboard</a>
-                        </div>
-                        <div class="menu-item">
-                            <a href="#">Classes</a>
-                            <div class="dropdown">
-                                <a href="{{ route('schedule.create') }}">Create</a>
-                                <a href="#">Edit</a>
-                                <a href="#">Show</a>
-                            </div>
-                        </div>
-
-                        <div class="menu-item">
-                            <a href="#">Hall</a>
-                            <div class="dropdown">
-                                <a href="{{ route('hall.create') }}">Create</a>
-                                <a href="#">Edit</a>
-                                <a href="#">Show</a>
-                            </div>
-                        </div>
-
-                        <div class="menu-item">
-                            <a href="#">Course</a>
-                            <div class="dropdown">
-                                <a href="{{ route('course.create') }}">Create</a>
-                                <a href="#">Edit</a>
-                                <a href="#">Show</a>
-                            </div>
-                        </div>
-
-                        <div class="menu-item">
-                            <a href="#">Lecturer</a>
-                            <div class="dropdown">
-                                <a href="{{ route('lecturer.create') }}">Create</a>
-                                <a href="#">Edit</a>
-                                <a href="#">Show</a>
-                            </div>
-                        </div>
-                    </div>
+                    @include('includes.menu')
                 </div>
             </div>
             <div class="col-md-9 padding-none margin-none">
@@ -90,7 +51,13 @@
                     <header>
 
                         <div class="action-btns">
-                            <button class="btn btn-outline-primary">Logout</button>
+                                <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}</a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
                         </div>
                     </header>
 

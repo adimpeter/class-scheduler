@@ -55,9 +55,9 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Course $course)
     {
-        //
+        
     }
 
     /**
@@ -66,9 +66,10 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Course $course)
     {
-        //
+        $courses = Course::all();
+        return view('course.edit', compact('course', 'courses'));
     }
 
     /**
@@ -78,9 +79,19 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Course $course)
     {
-        //
+        $request->validate([
+            'course_code' => 'required',
+            'name'  => 'required', 
+        ]);
+
+       $course->update([
+            'course_code' => strtoupper($request->course_code),
+            'name'  => ucwords($request->name)
+        ]);
+
+        return redirect()->back()->with('success', 'Course has been updated successfully');
     }
 
     /**
@@ -89,8 +100,14 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return redirect()->back()->with('success', 'Course Successfully Deleted');
+    }
+
+    public function showlist(){
+        $courses = Course::latest()->paginate(env('PAGINATE'));
+        return view('course.showlist', compact('courses'));
     }
 }

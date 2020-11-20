@@ -16,6 +16,7 @@ class Schedule extends Model
         'date',
         'start_time',
         'end_time',
+        'duration',
     ];
 
     public function course(){
@@ -28,5 +29,12 @@ class Schedule extends Model
 
     public function hall(){
         return $this->belongsTo('App\Models\Hall');
+    }
+
+    public function occurence(){
+        return \App\Models\Schedule::where('hall_id', $this->hall_id)
+                                    ->where('course_id', $this->course_id)
+                                    ->where('lecturer_id', $this->lecturer_id)
+                                    ->get()->count();
     }
 }

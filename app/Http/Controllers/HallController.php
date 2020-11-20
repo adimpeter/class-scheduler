@@ -64,9 +64,9 @@ class HallController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Hall $hall)
     {
-        //
+        return view('halls.edit', compact('hall'));
     }
 
     /**
@@ -76,9 +76,18 @@ class HallController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Hall $hall)
     {
-        //
+        $request->validate([
+            'name'     => 'required',
+        ]);
+
+        $hall_data = [
+            'name'     => $request->name,
+        ];
+
+        $hall->update($hall_data);
+        return redirect()->route('hall.showlist')->with('success', 'Hall has been updated');
     }
 
     /**
@@ -87,8 +96,14 @@ class HallController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Hall $hall)
     {
-        //
+        $hall->delete();
+        return redirect()->back()->with('success', 'Hall Successfully Deleted');
+    }
+
+    public function showlist(){
+        $halls = Hall::latest()->paginate(env('PAGINATE'));
+        return view('halls.showlist', compact('halls'));
     }
 }

@@ -1,10 +1,25 @@
 #side-bar {
-    background-color: #000;
-    height: 100%;
+    background-color: #0069D9;
+    min-height: 100vh;
+    position: fixed;
+    width: 100%;
+}
+#side-bar a {
+    color: #fff;
+}
+#side-bar a:hover {
+    text-decoration: none;
+    background-color: #1e7de2;
 }
 #main {
     background-color: #F6F8F8;
     height: 100%;
+}
+.margin-vertical-md {
+    margin: 15px 0px;
+}
+.align-items-center {
+    text-align: center !important;
 }
 
 #side-bar header,
@@ -36,10 +51,16 @@
     display: flex;
     flex-direction: column;
 }
+#menu .menu-item {
+    border-bottom: solid 1px #ceee;
+}
 /* #menu .menu-item {
     overflow: hidden;
 } */
 
+.btn {
+    border-radius: 0px !important;
+}
 .menu-item a {
     display: flex;
     height: 50px;
