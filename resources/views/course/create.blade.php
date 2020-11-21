@@ -5,6 +5,9 @@
 <section>
     <div class="row margin-none">
         @include('snipps.notify')
+        <div class="col-md-12 margin-vertical-md " id="notify">
+            
+        </div>
         <div class="col-md-6 offset-md-3">
             <form action="{{ route('course.store') }}" method="post">
                 @csrf()
@@ -13,6 +16,15 @@
                     <select name="course_code" id="coursecode" class="select2 form-control">
                         @foreach($courses as $course)
                             <option value="{{ $course->course_code }}">{{ $course->course_code }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="level">Level</label>
+                    <select name="level_id" id="level" class="select2 form-control">
+                        @foreach($levels as $level)
+                            <option value="{{ $level->id }}">{{ $level->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -38,6 +50,7 @@
                 <tr>
                     <th>Course Code</th>
                     <th>Course name</th>
+                    <th>Level</th>
                 </tr>
                 @foreach($courses as $course)
                     <tr>
@@ -46,6 +59,9 @@
                         </td>
                         <td>
                             {{ $course->name }}
+                        </td>
+                        <td>
+                            {{ $course->level->name ?? 'N/A' }}
                         </td>
                     </tr>
                 @endforeach 

@@ -7,6 +7,8 @@ use App\Models\Schedule;
 use App\Models\Hall;
 use App\Models\Lecturer;
 use App\Models\Course;
+use App\Exports\SchedulesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Carbon\Carbon;
 
@@ -158,5 +160,9 @@ class ScheduleController extends Controller
     public function showlist(){
         $schedules = Schedule::latest()->paginate(env('PAGINATE'));
         return view('schedules.showlist', compact('schedules'));
+    }
+
+    public function export(){
+        return Excel::download(new SchedulesExport, 'schedule.xlsx');
     }
 }

@@ -19,6 +19,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="level">Level</label>
+                    <select name="level_id" id="level" class="select2 form-control">
+                        @foreach($levels as $level)
+                            <option value="{{ $level->id }}" {{ ($course->level_id == $level->id)? 'selected' : '' }}>{{ $level->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="course">Course Name</label>
                     <input type="text" class="form-control" name="name" id="course" value="{{ $course->name }}">
                 </div>

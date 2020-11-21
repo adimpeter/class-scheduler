@@ -12,5 +12,10 @@ class Course extends Model
     protected $fillable = [
         'course_code',
         'name',
+        'level_id',
     ];
+
+    public function level(){
+        return $this->belongsTo('App\Models\Level');
+    }
 }

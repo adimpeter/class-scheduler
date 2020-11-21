@@ -19,6 +19,14 @@
     </div>
 
     <div class="menu-item">
+        <a href="#">Level</a>
+        <div class="dropdown">
+            <a href="{{ route('level.create') }}">Create</a>
+            <a href="{{ route('level.showlist') }}">Show</a>
+        </div>
+    </div>
+
+    <div class="menu-item">
         <a href="#">Course</a>
         <div class="dropdown">
             <a href="{{ route('course.create') }}">Create</a>

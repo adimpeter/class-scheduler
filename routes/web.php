@@ -5,6 +5,7 @@ use App\Http\Controllers\LecturerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 /*
@@ -39,6 +40,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/course/showlist', [CourseController::class, 'showlist'])->name('course.showlist');
     Route::patch('/course/{course}', [CourseController::class, 'update'])->name('course.update');
     Route::delete('/course/{course}', [CourseController::class, 'destroy'])->name('course.delete');
+    Route::post('/course/count/check', [CourseController::class, 'hasMaxCourse'])->name('course.count.check');
 
     Route::get('/hall/create', [HallController::class, 'create'])->name('hall.create');
     Route::post('/hall', [HallController::class, 'store'])->name('hall.store');
@@ -47,6 +49,7 @@ Route::middleware(['auth'])->group(function (){
     Route::patch('/hall/{hall}', [HallController::class, 'update'])->name('hall.update');
     Route::delete('/hall/{hall}', [HallController::class, 'destroy'])->name('hall.delete');
 
+    Route::get('/schedule/export', [ScheduleController::class, 'export'])->name('schedule.export');
     Route::get('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
     Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
     Route::post('/schedule/check', [ScheduleController::class, 'doesSimilarScheduleExist'])->name('schedule.check');
@@ -55,6 +58,14 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/schedule/{schedule}/edit', [ScheduleController::class, 'edit'])->name('schedule.edit');
     Route::patch('/schedule/{schedule}', [ScheduleController::class, 'update'])->name('schedule.update');
     Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy'])->name('schedule.delete');
+    
+
+    Route::get('/level/create', [LevelController::class, 'create'])->name('level.create');
+    Route::post('/level', [LevelController::class, 'store'])->name('level.store');
+    Route::get('/level/{level}/edit', [LevelController::class, 'edit'])->name('level.edit');
+    Route::get('/level/showlist', [LevelController::class, 'showlist'])->name('level.showlist');
+    Route::patch('/level/{level}', [LevelController::class, 'update'])->name('level.update');
+    Route::delete('/level/{level}', [LevelController::class, 'destroy'])->name('level.delete');
 
     
 });

@@ -34,10 +34,56 @@ $(document).ready(function(){
         var deleteForm = '.' + $(this).parent().attr('class');
         $('#formAction #deleteForm').val(deleteForm);
     });
+    $('.delete-level').on('click', function(e){
+        e.preventDefault();
+        var deleteForm = '.' + $(this).parent().attr('class');
+        $('#formAction #deleteForm').val(deleteForm);
+    });
 
     $('#confirmAction').on('click', function(e){
         var deleteForm = $(this).siblings('#deleteForm').val();
         $(deleteForm).submit();
+    });
+
+    $('#level').change(function(){
+
+        var levelID        = $(this).val();
+        var submitBtn      = $('#courseForm #submit');
+        var notifyDisplay  = $('#notify');
+
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+        $.ajax({
+            url: "/course/count/check", // check if max courses has been reached for this level
+            method: 'post',
+            data: {
+                level_id : levelID
+            },
+
+            success: function(result){
+                var errMsg = `
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    You can not add anymore courses to this level.
+
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>`;
+
+                if(result == 'false'){
+                    notifyDisplay.html(errMsg);
+                    submitBtn.attr('disabled', true);
+                    submitBtn.addClass('btn-disabled');
+                }else{
+                    notifyDisplay.html('');
+                    submitBtn.attr('disabled', false);
+                    submitBtn.removeClass('btn-disabled');
+                }
+            },
+            error: function(result){
+                alert('An Error Occured.');
+                console.log(result.responseText);
+            }
+        });
     });
 
     $('.add-schedule').on('click', function(e){
@@ -53,12 +99,8 @@ $(document).ready(function(){
 
 
 
-        $.ajaxSetup({
-            headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-    });
-       $.ajax({
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+        $.ajax({
             url: "/schedule/check",
             method: 'post',
             data: {
@@ -85,11 +127,11 @@ $(document).ready(function(){
                 }
             },
             error: function(result){
-                alert('An Error Occured.')
+                alert('An Error Occured.');
                 console.log(result.responseText);
             }
+            });
     });
-    })
 
     function deleteProperty(property){
         ('.delete-' + property).on('click', function(e){

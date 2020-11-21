@@ -6,35 +6,35 @@
     <div class="row margin-none">
         @include('snipps.notify')
         <div class="col-md-12">
-            <h3>All courses</h3>
-            <table class="table table-striped">
+            <h3>All Schedules</h3>
+            <table class="table table-striped table-sm">
                 <tr>
-                    <th>Course ID</th>
-                    <th>Course Name</th>
-                    <th>Course Level</th>
+                    <th>Level</th>
+                    <th>Maximum number of courses</th>
+                    <th>Current number of courses</th>
                     <th></th>
                 </tr>
-                @foreach($courses as $course)
+                @foreach($levels as $level)
                     <tr>
                         <td>
-                            <em>{!! $course->course_code ?? '<span class="text text-danger">N/A</span>' !!}</em>
+                            <em>{{ $level->name }}</em>
                         </td>
                         <td>
-                            {!! $course->name ?? '<span class="text text-danger">N/A</span>' !!}
+                            <em>{{ $level->max_number_of_courses }}</em>
                         </td>
                         <td>
-                            {!! $course->level->name ?? '<span class="text text-danger">N/A</span>' !!}
+                            {{ $level->courseCount() }}
                         </td>
                         <td>
                             <div class="row">
                                 <div class="col-6">
-                                    <a href="{{ route('course.edit' , ['course'=> $course]) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('level.edit' , ['level'=> $level]) }}" class="btn btn-primary">Edit</a>
                                 </div>
                                 <div class="col-6">
-                                    <form action="{{ route('course.delete', ['course' => $course]) }}" class="delete-course-form-{{ $course->id }}" method="post">
+                                    <form action="{{ route('level.delete', ['level' => $level]) }}" class="delete-level-form-{{ $level->id }}" method="post">
                                         @method('DELETE')
                                         @csrf()
-                                        <button class="btn btn-danger btn-block delete-course" data-toggle="modal" data-target="#confirmActionModal">Delete</button>
+                                        <button class="btn btn-danger btn-block delete-level" data-toggle="modal" data-target="#confirmActionModal">Delete</button>
                                     </form>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="col-md-12 margin-vertical-md">
-            {{ $courses->links() }}    
+            {{ $levels->links() }}    
         </div>
     </div>
 </section>
