@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLevelIdToCourses extends Migration
+class UpdateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,8 +16,9 @@ class AddLevelIdToCourses extends Migration
         Schema::table('courses', function (Blueprint $table) {
             $table->foreignId('level_id')
                     ->constrained()
-                    ->onDelete('cascade');
+                    ->onDelete('cascade')->nullable()->change();
         });
+        
     }
 
     /**
