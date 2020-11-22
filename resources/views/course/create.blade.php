@@ -9,7 +9,7 @@
             
         </div>
         <div class="col-md-6 offset-md-3">
-            <form action="{{ route('course.store') }}" method="post">
+            <form action="{{ route('course.store') }}" method="post" id="courseForm">
                 @csrf()
                 <div class="form-group">
                     <label for="coursecode">Course Code</label>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                    <button class="btn btn-primary">Add</button>
+                    <button class="btn btn-primary" id="submit">Add</button>
                 </div>
             </form>
         </div>

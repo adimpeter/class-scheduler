@@ -71,11 +71,11 @@ $(document).ready(function(){
 
                 if(result == 'true'){
                     notifyDisplay.html(errMsg);
-                    submitBtn.attr('disabled', true);
+                    submitBtn.prop("disabled",true);
                     submitBtn.addClass('btn-disabled');
                 }else{
                     notifyDisplay.html('');
-                    submitBtn.attr('disabled', false);
+                    submitBtn.prop("disabled",false);
                     submitBtn.removeClass('btn-disabled');
                 }
             },
