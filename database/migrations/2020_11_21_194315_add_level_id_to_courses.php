@@ -14,9 +14,7 @@ class AddLevelIdToCourses extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->foreignId('level_id')
-                    ->constrained()
-                    ->onDelete('cascade');
+            $table->string('level_id')->nullable();
         });
     }
 
