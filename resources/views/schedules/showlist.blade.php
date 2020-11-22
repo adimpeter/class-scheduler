@@ -6,7 +6,6 @@
     <div class="row margin-none">
         @include('snipps.notify')
         <div class="col-md-12">
-            <span class="float-right"><a href="{{ route('schedule.export') }}" class="btn btn-success">Download Excel</a></span>
             <h3>All Schedules</h3>
             <table class="table table-striped table-sm">
                 <tr>

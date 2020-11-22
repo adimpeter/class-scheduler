@@ -17,7 +17,7 @@
                         <label for="courseid">Course</label>
                         <select name="course_id" id="courseid" class="select2 form-control">
                             @foreach($courses as $course)
-                                <option value="{{ $course->id }}">{{ $course->course_code }} {{ $course->name }}</option>
+                                <option value="{{ $course->id }}">{{ $course->course_code }} {{ $course->name }} -- {{ $course->level->name }}</option>
                             @endforeach
                         </select>
                     </div>
