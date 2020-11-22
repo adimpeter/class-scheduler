@@ -23,6 +23,7 @@
                 <div class="form-group">
                     <label for="level">Level</label>
                     <select name="level_id" id="level" class="select2 form-control">
+                        <option >-- select level --</option>
                         @foreach($levels as $level)
                             <option value="{{ $level->id }}">{{ $level->name }}</option>
                         @endforeach

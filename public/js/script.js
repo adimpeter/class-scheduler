@@ -45,7 +45,7 @@ $(document).ready(function(){
         $(deleteForm).submit();
     });
 
-    $('#level').change(function(){
+    $('#level').on('select2:close', function(e){
 
         var levelID        = $(this).val();
         var submitBtn      = $('#courseForm #submit');
@@ -69,7 +69,7 @@ $(document).ready(function(){
                     </button>
                 </div>`;
 
-                if(result == 'false'){
+                if(result == 'true'){
                     notifyDisplay.html(errMsg);
                     submitBtn.attr('disabled', true);
                     submitBtn.addClass('btn-disabled');
