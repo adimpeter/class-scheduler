@@ -5,7 +5,7 @@
 <section>
     <div class="row margin-none">
         @include('snipps.notify')
-
+    {{--
         <div class="col-md-12">
             <div class="btn-group" role="group" aria-label="BtnGroup">
                 <a type="button" href="{{ route('schedule.dashboard', ['scheduleType' => 'today']) }}" class="btn btn-primary">Today</a>
@@ -13,10 +13,11 @@
                 <a type="button" href="{{ route('schedule.dashboard', ['scheduleType' => 'all']) }}" class="btn btn-primary">All</a>
             </div>
         </div>
+        --}}
         <div class="col-md-12">
             <span class="float-right"><a href="{{ route('schedule.export') }}" class="btn btn-success">Download Excel</a></span>
             <h3>{{ ucwords($scheduleType)}} Schedules</h3>
-            <table class="table table-striped table-sm">
+            {{--<table class="table table-striped table-sm">
                 <tr>
                     <th>Subject Code</th>
                     <th>Subject Name</th>
@@ -52,13 +53,13 @@
                     </tr>
                 @endforeach 
                 
-            </table>
+            </table> --}}
         </div>
-
+{{--
         <div class="col-md-12 margin-vertical-md">
             {{ $schedules->links() }}    
-        </div>
-    </div>
+        </div> --}}
+    </div> 
 </section>
 
 @include('snipps.confirm-action')

@@ -32,10 +32,9 @@ class ScheduleController extends Controller
     public function create()
     {
         $schedules  = Schedule::latest()->get();
-        $lecturers  = Lecturer::all();
         $halls      = Hall::all();
         $courses    = Course::all();
-        return view('schedules.create', compact('schedules', 'lecturers', 'halls', 'courses'));
+        return view('schedules.create', compact('schedules', 'halls', 'courses'));
     }
 
     /**
@@ -49,20 +48,17 @@ class ScheduleController extends Controller
         $request->validate([
             'course_id'     => 'required',
             'hall_id'       => 'required',
-            'lecturer_id'   => 'required',
-            'date'          => 'required',
             'duration'      => 'required',
+            'occurence'     => 'required',
         ]);
 
         $schedule_data = [
             'course_id'     => $request->course_id,
             'hall_id'       => $request->hall_id,
-            'lecturer_id'   => $request->lecturer_id,
-            'date'          => Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D'),
+            'occurence'     => $request->occurence,
             'duration'      => $request->duration,
         ];
 
-        $schedule_data['duration'] = $request->duration;
         Schedule::create($schedule_data);
 
         return redirect()->back()->with('success', 'Your schedule has been created');
@@ -88,10 +84,9 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule)
     {
-        $lecturers  = Lecturer::all();
         $halls      = Hall::all();
         $courses    = Course::all();
-        return view('schedules.edit', compact('schedule', 'lecturers', 'halls', 'courses'));
+        return view('schedules.edit', compact('schedule', 'halls', 'courses'));
     }
 
     /**
@@ -103,19 +98,17 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, Schedule $schedule)
     {
-        $request->validate([
+         $request->validate([
             'course_id'     => 'required',
             'hall_id'       => 'required',
-            'lecturer_id'   => 'required',
-            'date'          => 'required',
             'duration'      => 'required',
+            'occurence'     => 'required',
         ]);
 
         $schedule_data = [
             'course_id'     => $request->course_id,
             'hall_id'       => $request->hall_id,
-            'lecturer_id'   => $request->lecturer_id,
-            'date'          => Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D'),
+            'occurence'     => $request->occurence,
             'duration'      => $request->duration,
         ];
 
@@ -137,18 +130,16 @@ class ScheduleController extends Controller
     }
 
     public function doesSimilarScheduleExist(Request $request){
-        $date = Carbon::parse(str_replace('.', '/', $request->date))->isoFormat('Y-M-D');
+        
         $schedule_data = [
             'course_id'     => $request->course_id,
             'hall_id'       => $request->hall_id,
-            'lecturer_id'   => $request->lecturer_id,
-            'date'          => $date,
+            'occurence'     => $request->occurence,
         ];
 
         $schedule = Schedule::where('course_id', $request->course_id)
                     ->where('hall_id', $request->hall_id)
-                    ->where('lecturer_id', $request->lecturer_id)
-                    ->where('date', $date)->get();
+                    ->where('occurence', $request->occurence)->get();
 
 
         $response = '';

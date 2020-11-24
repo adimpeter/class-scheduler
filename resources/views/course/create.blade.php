@@ -23,9 +23,18 @@
                 <div class="form-group">
                     <label for="level">Level</label>
                     <select name="level_id" id="level" class="select2 form-control">
-                        <option >-- select level --</option>
+                        <option value="0" >-- select level --</option>
                         @foreach($levels as $level)
                             <option value="{{ $level->id }}">{{ $level->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="lecturer">Lecturer</label>
+                    <select name="lecturer_id" id="lecturer" class="select2 form-control">
+                        @foreach($lecturers as $lecturer)
+                            <option value="{{ $lecturer->id }}">{{ $lecturer->lastname }}  {{ $lecturer->firstname }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -52,6 +61,7 @@
                     <th>Course Code</th>
                     <th>Course name</th>
                     <th>Level</th>
+                    <th>Lecturer</th>
                 </tr>
                 @foreach($courses as $course)
                     <tr>
@@ -63,6 +73,9 @@
                         </td>
                         <td>
                             {{ $course->level->name ?? 'N/A' }}
+                        </td>
+                        <td>
+                            {{ $course->lecturer->lastname ?? 'N/A' }} {{ $course->lecturer->firstname ?? 'N/A' }}
                         </td>
                     </tr>
                 @endforeach 

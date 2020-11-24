@@ -31,27 +31,13 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group col-12">
-                        <label for="lecturerid">lecturer</label>
-                        <select name="lecturer_id" id="lecturerid" class="select2 form-control">
-                            @foreach($lecturers as $lecturer)
-                                <option value="{{ $lecturer->id }}" {{ ($schedule->lecturer_id == $lecturer->id)? 'selected' : '' }}>{{ $lecturer->lastname }} {{ $lecturer->firstname }}</option>
-                            @endforeach
-                        </select>
+                    
+                    <div class="form-group col-6">
+                        <label for="occurence">Occurence per week</label>
+                        <input type="number" min="1" max="5"  value="{{ $schedule->occurence }}" class="form-control" autocomplete="off" name="occurence" id="occurence">
                     </div>
 
-                    <div class="form-group col-8">
-                        <label for="date">Date</label>
-                        <!-- Datepicker as text field -->         
-                        <div class="input-group date" data-date-format="dd.mm.yyyy">
-                            <input  type="text" class="form-control" placeholder="dd.mm.yyyy"name="date" id="date" autocomplete="off"  value="{{ $schedule->date }}">
-                            <div class="input-group-addon" >
-                            <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-4">
+                    <div class="form-group col-6">
                         <label for="duration">Duration ( Hours )</label>
                         <input type="number" min="1" max="24" value="{{ $schedule->duration }}" class="form-control" autocomplete="off" name="duration" id="duration">
                     </div>

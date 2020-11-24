@@ -28,6 +28,15 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="lecturer">Lecturer</label>
+                    <select name="lecturer_id" id="lecturer" class="select2 form-control">
+                        @foreach($lecturers as $lecturer)
+                            <option value="{{ $lecturer->id }}" {{ ($course->lecturer_id == $lecturer->id)? 'selected' : '' }}>{{ $lecturer->lastname }}  {{ $lecturer->firstname }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="course">Course Name</label>
                     <input type="text" class="form-control" name="name" id="course" value="{{ $course->name }}">
                 </div>

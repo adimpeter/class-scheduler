@@ -12,6 +12,7 @@
                     <th>Course ID</th>
                     <th>Course Name</th>
                     <th>Course Level</th>
+                    <th>Lecturer</th>
                     <th></th>
                 </tr>
                 @foreach($courses as $course)
@@ -24,6 +25,9 @@
                         </td>
                         <td>
                             {!! $course->level->name ?? '<span class="text text-danger">N/A</span>' !!}
+                        </td>
+                        <td>
+                            {!! $course->lecturer->lastname ?? '<span class="text text-danger">N/A</span>' !!} {!! $course->lecturer->firstname ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
                             <div class="row">

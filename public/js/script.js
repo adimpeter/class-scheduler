@@ -47,6 +47,10 @@ $(document).ready(function(){
 
     $('#level').on('select2:close', function(e){
 
+        if($(this).val() == 0){
+            return;
+        }
+
         var levelID        = $(this).val();
         var submitBtn      = $('#courseForm #submit');
         var notifyDisplay  = $('#notify');
@@ -91,8 +95,7 @@ $(document).ready(function(){
 
         var courseID        = $('#scheduleForm #courseid').val();
         var hallID          = $('#scheduleForm #hallid').val();
-        var lecturerID      = $('#scheduleForm #lecturerid').val();
-        var selectedDate    = $('#scheduleForm #date').val();
+        var occurence       = $('#scheduleForm #occurence').val();
 
         var notifyDisplay   = $('#notify');
         var scheduleForm    = $('#scheduleForm');
@@ -106,8 +109,7 @@ $(document).ready(function(){
             data: {
                 course_id : courseID,
                 hall_id : hallID,
-                lecturer_id : lecturerID,
-                date : selectedDate,
+                occurence : occurence,
             },
 
             success: function(result){

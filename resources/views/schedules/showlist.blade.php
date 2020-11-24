@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <section>
     <div class="row margin-none">
         @include('snipps.notify')
@@ -14,7 +15,6 @@
                     <th>Level</th>
                     <th>Lecturer</th>
                     <th>Venue</th>
-                    <th>Date</th>
                     <th>Duration (Hr)</th>
                     <th>Occurence</th>
                     <th></th>
@@ -31,13 +31,10 @@
                             {!! $schedule->course->level->name ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
-                            {!! $schedule->lecturer->lastname  ?? '<span class="text text-danger">N/A</span>' !!} {!! $schedule->lecturer->firstname  ?? '<span class="text text-danger">N/A</span>' !!}
+                            {!! $schedule->course->lecturer->lastname  ?? '<span class="text text-danger">N/A</span>' !!} {!! $schedule->course->lecturer->firstname  ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
                             {!! $schedule->hall->name ?? '<span class="text text-danger">N/A</span>' !!}
-                        </td>
-                        <td>
-                            {{ $schedule->date }}
                         </td>
                         <td>
                             {{ $schedule->duration }}

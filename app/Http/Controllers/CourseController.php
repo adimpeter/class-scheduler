@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Level;
+use App\Models\Lecturer;
 
 class CourseController extends Controller
 {
@@ -27,7 +28,8 @@ class CourseController extends Controller
     {
         $courses    = Course::orderBy('id', 'desc')->take(10)->get();
         $levels     = Level::all();
-        return view('course.create', compact('courses', 'levels'));
+        $lecturers  = Lecturer::all();
+        return view('course.create', compact('courses', 'levels', 'lecturers'));
     }
 
     /**
@@ -42,11 +44,13 @@ class CourseController extends Controller
             'course_code'   => 'required',
             'name'          => 'required', 
             'level_id'      => 'required',
+            'lecturer_id'   => 'required',
         ]);
 
         Course::create([
             'course_code' => strtoupper($request->course_code),
             'level_id' => $request->level_id,
+            'lecturer_id' => $request->lecturer_id,
             'name'  => ucwords($request->name)
         ]);
 
@@ -74,7 +78,8 @@ class CourseController extends Controller
     {
         $courses    = Course::all();
         $levels     = Level::all();
-        return view('course.edit', compact('course', 'courses', 'levels'));
+        $lecturers  = Lecturer::all();
+        return view('course.edit', compact('course', 'courses', 'levels', 'lecturers'));
     }
 
     /**
@@ -90,12 +95,14 @@ class CourseController extends Controller
             'course_code'   => 'required',
             'name'          => 'required', 
             'level_id'      => 'required',
+            'lecturer_id'   => 'required',
         ]);
 
        $course->update([
-            'course_code' => strtoupper($request->course_code),
-            'level_id' => $request->level_id,
-            'name'  => ucwords($request->name)
+            'course_code'   => strtoupper($request->course_code),
+            'level_id'      => $request->level_id,
+            'name'          => ucwords($request->name),
+            'lecturer_id'   => $request->lecturer_id
         ]);
 
         return redirect()->back()->with('success', 'Course has been updated successfully');
