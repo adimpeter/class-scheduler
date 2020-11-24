@@ -14,7 +14,7 @@ class RemoveLecturerIdFromSchedules extends Migration
     public function up()
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->dropColumn('lecturer_id');
+            $table->dropForeign(['lecturer_id']);
         });
     }
 
