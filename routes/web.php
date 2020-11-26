@@ -19,14 +19,15 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/{scheduleType?}', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/schedule/export', [ScheduleController::class, 'export'])->name('schedule.export');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
 Route::middleware(['auth'])->group(function (){
-    Route::get('/schedule/dashboard/{scheduleType?}', [DashboardController::class, 'index'])->name('schedule.dashboard');
+    Route::get('/schedule/dashboard', [DashboardController::class, 'index'])->name('schedule.dashboard');
     Route::get('/lecturer/create', [LecturerController::class, 'create'])->name('lecturer.create');
     Route::post('/lecturer', [LecturerController::class, 'store'])->name('lecturer.store');
     Route::get('/lecturer/{lecturer}/edit', [LecturerController::class, 'edit'])->name('lecturer.edit');
@@ -49,7 +50,6 @@ Route::middleware(['auth'])->group(function (){
     Route::patch('/hall/{hall}', [HallController::class, 'update'])->name('hall.update');
     Route::delete('/hall/{hall}', [HallController::class, 'destroy'])->name('hall.delete');
 
-    Route::get('/schedule/export', [ScheduleController::class, 'export'])->name('schedule.export');
     Route::get('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
     Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
     Route::post('/schedule/check', [ScheduleController::class, 'doesSimilarScheduleExist'])->name('schedule.check');

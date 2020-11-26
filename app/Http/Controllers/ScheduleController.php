@@ -149,8 +149,9 @@ class ScheduleController extends Controller
     }
 
     public function showlist(){
-        $schedules = Schedule::latest()->paginate(env('PAGINATE'));
-        return view('schedules.showlist', compact('schedules'));
+        $timetable = Schedule::generateTimetable();
+        // $schedules = Schedule::latest()->paginate(env('PAGINATE'));
+        return view('schedules.showlist', compact('timetable'));
     }
 
     public function export(){

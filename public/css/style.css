@@ -58,6 +58,14 @@
     overflow: hidden;
 } */
 
+.table-sm {
+    font-size: 13px !important;
+}
+.dark-bg {
+    background-color: #333 !important;
+    color: #ccc;
+}
+
 .btn {
     border-radius: 0px !important;
 }
