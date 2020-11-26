@@ -38,7 +38,7 @@
 
                     <div class="form-group col-6">
                         <label for="duration">Duration ( Hours )</label>
-                        <input type="number" min="1" max="24" value="3" class="form-control" autocomplete="off" name="duration" id="duration">
+                        <input type="number" min="1" max="3" value="3" class="form-control" autocomplete="off" name="duration" id="duration">
                     </div>
                 </div>
                 

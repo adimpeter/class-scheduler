@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Schedule;
 use App\Models\Hall;
-use App\Models\Lecturer;
 use App\Models\Course;
 use App\Exports\SchedulesExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -139,7 +138,8 @@ class ScheduleController extends Controller
 
         $schedule = Schedule::where('course_id', $request->course_id)
                     ->where('hall_id', $request->hall_id)
-                    ->where('occurence', $request->occurence)->get();
+                    ->where('occurence', $request->occurence)
+                    ->where('duration', $request->duration)->get();
 
 
         $response = '';

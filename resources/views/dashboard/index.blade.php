@@ -48,7 +48,7 @@
                             {{ $schedule->duration }}
                         </td>
                         <td>
-                            {!! $schedule->occurence() ?? '<span class="text text-danger">N/A</span>' !!}
+                            {!! $schedule->occurence ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                     </tr>
                 @endforeach 

@@ -33,12 +33,6 @@ class Schedule extends Model
         return $this->belongsTo('App\Models\Hall');
     }
 
-    public function occurence(){
-        return \App\Models\Schedule::where('hall_id', $this->hall_id)
-                                    ->where('course_id', $this->course_id)
-                                    ->get()->count();
-    }
-
     public static function generateSchedule(){
         $schedules = self::all();
         $timetable = [];
@@ -63,5 +57,29 @@ class Schedule extends Model
         }
 
         return collect($timetable);
+    }
+
+    public function increaseOccurenceLoopCount(){
+        $occurence = $this->occurence;
+        $occurence_loop_count = $this->occurence_loop;
+
+        if($occurence > 0){
+            $occurence_loop_count++;
+            $occurence--;
+
+            $this->occurence_loop = $occurence_loop_count;
+            $this->occurence = $occurence;
+            $this->save();
+        }
+    }
+
+    public function resetOccurenceLoopCount(){
+        $occurence_loop_count = $this->occurence;
+        $occurence = $this->occurence_loop;
+
+        $this->occurence = $occurence;
+        $this->occurence_loop = $occurence_loop_count;
+
+        $this->save();
     }
 }

@@ -17,6 +17,7 @@
                     <th>Venue</th>
                     <th>Duration (Hr)</th>
                     <th>Occurence</th>
+                    <th>Occurence Loop</th>
                     <th></th>
                 </tr>
                 @foreach($schedules as $schedule)
@@ -40,7 +41,10 @@
                             {{ $schedule->duration }}
                         </td>
                         <td>
-                            {!! $schedule->occurence() ?? '<span class="text text-danger">N/A</span>' !!}
+                            {!! $schedule->occurence ?? '<span class="text text-danger">N/A</span>' !!}
+                        </td>
+                        <td>
+                            {!! $schedule->occurence_loop ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
                             <div class="row">

@@ -96,6 +96,7 @@ $(document).ready(function(){
         var courseID        = $('#scheduleForm #courseid').val();
         var hallID          = $('#scheduleForm #hallid').val();
         var occurence       = $('#scheduleForm #occurence').val();
+        var duration       = $('#scheduleForm #duration').val();
 
         var notifyDisplay   = $('#notify');
         var scheduleForm    = $('#scheduleForm');
@@ -110,6 +111,7 @@ $(document).ready(function(){
                 course_id : courseID,
                 hall_id : hallID,
                 occurence : occurence,
+                duration: duration,
             },
 
             success: function(result){

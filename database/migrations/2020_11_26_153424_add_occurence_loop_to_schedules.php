@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RemoveDateFromSchedules extends Migration
+class AddOccurenceLoopToSchedules extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class RemoveDateFromSchedules extends Migration
     public function up()
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->dropColumn('date');
+            $table->tinyInteger('occurence_loop')->default(0);
         });
     }
 
@@ -26,7 +26,7 @@ class RemoveDateFromSchedules extends Migration
     public function down()
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->string('date');
+            $table->dropColumn('occurence_loop');
         });
     }
 }
