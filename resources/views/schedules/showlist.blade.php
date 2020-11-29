@@ -31,6 +31,9 @@
                             {!! $schedule->course->level->name ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
+                            {!! $schedule->hall->name ?? '<span class="text text-danger">N/A</span>' !!}
+                        </td>
+                        <td>
                             {!! $schedule->course->lecturer->lastname  ?? '<span class="text text-danger">N/A</span>' !!} {!! $schedule->course->lecturer->firstname  ?? '<span class="text text-danger">N/A</span>' !!}
                         </td>
                         <td>
