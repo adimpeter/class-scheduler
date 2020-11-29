@@ -21,40 +21,43 @@ class SchedulesExport implements FromCollection, WithHeadings, ShouldAutoSize, W
 
         $schedules = Schedule::all();
         $timetable = Schedule::generateTimetable();
+        $time_span = [
+            "9AM - 10AM",
+            "10AM - 11AM", 
+            "11AM - 12PM", 
+            "12PM - 1PM", 
+            "1PM - 2PM", 
+            "2PM - 3PM", 
+            "3PM - 4PM", 
+            "4PM - 5PM"
+        ];
+        
+        
+        $count = 0;
+        foreach($timetable as $key => $values){
 
-        
-        
-        $count = 1;
-        foreach($timetable as $data){
+            $schedule_data[$key][] = $key;
+            foreach($values as $value){
+                $schedule_data[$key][] = $value->course_code;
+            }
             
-            $schedule_data[] = [
-                'sn/o'          => $count++,
-                'Course Code'   => $data->course_code,
-                'Course'   => $data->course ?? 'N/A',
-                'Hall'        => $data->hall ?? 'N/A',
-                'Level'         => $data->level ?? 'N/A',
-                'Lecturer'      => $data->lecturer ?? 'N/A',
-                'From'          => $data->from ?? 'N/A',
-                'To'            => $data->to ?? 'N/A',
-                'Date'          => $data->date,
-            ];
+            
         }
-        
         return collect($schedule_data);
     }
 
     public function headings(): array
     {
         return [
-            "SN/O", 
-            "Course Code",
-            "Course", 
-            "Hall", 
-            "Level", 
-            "Lecturer", 
-            "From", 
-            "To", 
-            "Date"
+            "Date / Time", 
+            "9AM - 10AM",
+            "10AM - 11AM", 
+            "11AM - 12PM", 
+            "12PM - 1PM", 
+            "1PM - 2PM", 
+            "2PM - 3PM", 
+            "3PM - 4PM", 
+            "4PM - 5PM"
         ];
     }
 
